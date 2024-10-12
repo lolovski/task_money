@@ -7,8 +7,8 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from task_money.middleware.admin_panel import AdminMiddleware
-from task_money.middleware.user import UserChannelMiddleware
+from middleware.admin_panel import AdminMiddleware
+from middleware.user import UserChannelMiddleware
 
 
 dp = Dispatcher()

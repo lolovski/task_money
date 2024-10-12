@@ -1,8 +1,8 @@
 from aiogram import Bot
 
-from task_money.database.models import Task
-from task_money.database.requests.user import get_users
-from task_money.keyboard.inline.task import task_acceptance
+from database.models import Task
+from database.requests.user import get_users
+from keyboard.inline.task import task_acceptance
 
 
 async def mailing_task(bot: Bot, task: Task):
