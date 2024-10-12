@@ -60,7 +60,7 @@ async def main_profile_handler(message: Message, bot: Bot, state: FSMContext, tg
 async def money_withdrawal_handler(call: CallbackQuery, bot: Bot, state: FSMContext):
     await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id, )
     answer = await call.message.answer(
-        text='<b>Минимальная сумма для вывода денег: 150 ₽\n'
+        text='<b>Минимальная сумма для вывода денег: 150 ₽\n\n'
              'Выберите платежную систему ниже 👇</b>',
         reply_markup=choose_payment_system_keyboard, disable_web_page_preview=True)
     await state.set_state(MoneyWithdrawalForm.message_id)
