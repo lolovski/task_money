@@ -25,21 +25,21 @@ dp.update.middleware.register(AdminMiddleware())
 async def main() -> None:
     # wait async_main()
     # await add_visits()
-    from task_money.handlers.basic import router as basic_router
+    from handlers.basic import router as basic_router
     dp.include_router(basic_router)
-    from task_money.handlers.start import router as start_router
+    from handlers.start import router as start_router
     dp.include_router(start_router)
-    from task_money.handlers.profile import router as profile_router
+    from handlers.profile import router as profile_router
     dp.include_router(profile_router)
-    from task_money.handlers.admin_panel import router as admin_panel_router
+    from handlers.admin_panel import router as admin_panel_router
     dp.include_router(admin_panel_router)
-    from task_money.handlers.task import router as task_router
+    from handlers.task import router as task_router
     dp.include_router(task_router)
-    from task_money.handlers.admin_tasks import router as admin_task_router
+    from handlers.admin_tasks import router as admin_task_router
     dp.include_router(admin_task_router)
-    from task_money.handlers.referral_system import router as referral_system_router
+    from handlers.referral_system import router as referral_system_router
     dp.include_router(referral_system_router)
-    from task_money.handlers.help import router as help_router
+    from handlers.help import router as help_router
     dp.include_router(help_router)
 
     await dp.start_polling(bot)
