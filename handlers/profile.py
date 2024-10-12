@@ -60,18 +60,8 @@ async def main_profile_handler(message: Message, bot: Bot, state: FSMContext, tg
 async def money_withdrawal_handler(call: CallbackQuery, bot: Bot, state: FSMContext):
     await bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id, )
     answer = await call.message.answer(
-        text='<b>💳 ВЫВОД ДЕНЕЖНЫХ СРЕДСТВ ПРОИСХОДИТ ТОЛЬКО НА ЮMoney (РФ/СНГ) и банковские картs РФ💸 \n\n'
-             'Минимальная сумма вывода средств (руб):📌\n\n'
-             'Юmoney\n'
-             '├  по номеру телефона/счета - 150₽\n'
-             '└  по номеру карты - 150 ₽\n\n'
-             '📌 Банковские карты (РФ)\n'
-             '├  по номеру телефона - 300 ₽\n'
-             '└  пономеру карты - 400 ₽\n\n'
-             '📌 Баланс телефона - 150 ₽❗️\n\n'
-             'Выводим только на идентифицированные(верифицированные) кошельки ЮMoney. \n'
-             '🖥 Как верифицировать свой кошелек <a href="https://yoomoney.ru/page?id=536144">ЮMoney</a>\n\n'
-             '🏦 Выбери платежную систему для вывода 🏦</b>',
+        text='<b>Минимальная сумма для вывода денег: 150 ₽'
+             'Выберите платежную систему ниже 👇</b>',
         reply_markup=choose_payment_system_keyboard, disable_web_page_preview=True)
     await state.set_state(MoneyWithdrawalForm.message_id)
     await state.update_data(message_id=answer.message_id)
