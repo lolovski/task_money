@@ -18,6 +18,6 @@ async def delete_balance(user_id, amount):
         user.balance -= int(amount)
         await session.commit()
         await session.refresh(user)
-        return user.balance
+        return user.balance, user.tg_id
 
 
