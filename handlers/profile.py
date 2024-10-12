@@ -7,12 +7,12 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from dotenv import load_dotenv
 
-from task_money.database.requests.user import get_user_by_tg_id, debit, get_profile
-from task_money.keyboard.inline.admin_panel import withdrawal_admin_keyboard
-from task_money.keyboard.inline.profile import money_withdrawal_keyboard
-from task_money.keyboard.reply.profile import choose_payment_system_keyboard, choose_bank_keyboard, contact_keyboard, \
+from database.requests.user import get_user_by_tg_id, debit, get_profile
+from keyboard.inline.admin_panel import withdrawal_admin_keyboard
+from keyboard.inline.profile import money_withdrawal_keyboard
+from keyboard.reply.profile import choose_payment_system_keyboard, choose_bank_keyboard, contact_keyboard, \
     choose_telecom_operator_keyboard
-from task_money.keyboard.reply.start import start_keyboard
+from keyboard.reply.start import start_keyboard
 
 load_dotenv()
 admin_id = os.getenv('ADMIN_ID')

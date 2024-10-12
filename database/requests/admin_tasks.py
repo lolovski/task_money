@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from task_money.database.models import async_session, Task, ActiveTask, PendingTask
+from database.models import async_session, Task, ActiveTask, PendingTask
 
 
 async def get_actuality_tasks() -> list[Task]:

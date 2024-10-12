@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from task_money.database.models import async_session, User, Task, Category, ActiveTask
+from database.models import async_session, User, Task, Category, ActiveTask
 from sqlalchemy import select
 
 

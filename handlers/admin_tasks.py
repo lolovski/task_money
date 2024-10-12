@@ -7,15 +7,15 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message, CallbackQuery
 from dotenv import load_dotenv
 
-from task_money.database.models import Task
-from task_money.database.requests.admin_tasks import get_pending_tasks, get_active_tasks, get_actuality_tasks, \
+from database.models import Task
+from database.requests.admin_tasks import get_pending_tasks, get_active_tasks, get_actuality_tasks, \
     get_this_active_tasks, get_this_pending_tasks
-from task_money.database.requests.task import get_task, delete_task, get_active_task, cancel_executed_task, \
+from database.requests.task import get_task, delete_task, get_active_task, cancel_executed_task, \
     cancel_pending_task, complete_pending_task, get_active_task_by_id, get_pending_task_by_id
-from task_money.keyboard.inline.admin_tasks import actuality_admin_tasks_keyboard, active_admin_tasks_keyboard, \
+from keyboard.inline.admin_tasks import actuality_admin_tasks_keyboard, active_admin_tasks_keyboard, \
     pending_admin_tasks_keyboard, actuality_task_keyboard, active_task_keyboard, pending_task_keyboard, \
     active_tasks_keyboard, pending_tasks_keyboard
-from task_money.keyboard.reply.admin_panel import admin_start_keyboard
+from keyboard.reply.admin_panel import admin_start_keyboard
 
 load_dotenv()
 admin_id = os.getenv('ADMIN_ID')

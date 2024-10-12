@@ -6,14 +6,14 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message, CallbackQuery
 from dotenv import load_dotenv
 
-from task_money.database.requests.admin_panel import add_balance, delete_balance
-from task_money.database.requests.category import get_categories, set_category, delete_category
-from task_money.database.requests.task import set_task
-from task_money.database.requests.user import add_money, get_user
-from task_money.keyboard.inline.admin_panel import category_selection_keyboard, \
+from database.requests.admin_panel import add_balance, delete_balance
+from database.requests.category import get_categories, set_category, delete_category
+from database.requests.task import set_task
+from database.requests.user import add_money, get_user
+from keyboard.inline.admin_panel import category_selection_keyboard, \
     confirm_add_task_keyboard, delete_category_keyboard
-from task_money.keyboard.reply.admin_panel import admin_start_keyboard
-from task_money.utils.mailing import mailing_task
+from keyboard.reply.admin_panel import admin_start_keyboard
+from utils.mailing import mailing_task
 
 load_dotenv()
 admin_id = os.getenv('ADMIN_ID')

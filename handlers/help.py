@@ -6,7 +6,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
 from dotenv import load_dotenv
 
-from task_money.keyboard.reply.start import start_keyboard
+from keyboard.reply.start import start_keyboard
 
 load_dotenv()
 admin_id = os.getenv('ADMIN_ID')

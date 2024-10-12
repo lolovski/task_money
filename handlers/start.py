@@ -9,10 +9,10 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.utils.payload import decode_payload
 from dotenv import load_dotenv
 
-from task_money.database.requests.user import get_user_by_tg_id, set_user
-from task_money.keyboard.inline.start import channel_url_keyboard, adopt_rules
-from task_money.keyboard.reply.admin_panel import admin_start_keyboard
-from task_money.keyboard.reply.start import start_keyboard
+from database.requests.user import get_user_by_tg_id, set_user
+from keyboard.inline.start import channel_url_keyboard, adopt_rules
+from keyboard.reply.admin_panel import admin_start_keyboard
+from keyboard.reply.start import start_keyboard
 
 load_dotenv()
 router = Router(name=__name__)

@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from task_money.database.models import async_session, User
+from database.models import async_session, User
 
 
 async def add_balance(user_id, amount):

@@ -3,7 +3,7 @@ from typing import List
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from task_money.database.models import Task
+from database.models import Task
 
 
 async def task_acceptance(task_id):

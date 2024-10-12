@@ -2,7 +2,7 @@ from typing import Optional
 
 from sqlalchemy import select
 
-from task_money.database.models import async_session, User, Task, ActiveTask, PendingTask
+from database.models import async_session, User, Task, ActiveTask, PendingTask
 
 
 async def set_task(data):
