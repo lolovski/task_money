@@ -12,7 +12,7 @@ admin_id = os.getenv('ADMIN_ID')
 
 @router.startup()
 async def on_startup(bot: Bot):
-    from task_money.core.commands import set_commands
+    from core.commands import set_commands
     await set_commands(bot)
 #    await bot.send_message(admin_id, text=f'<tg-spoiler>Начало работы</tg-spoiler>')
 
