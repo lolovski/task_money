@@ -2,7 +2,7 @@ from sqlalchemy import select
 
 from database.models import async_session, User
 
-from task_money.database.models import Task, ActiveTask, PendingTask
+from database.models import Task, ActiveTask, PendingTask
 
 
 async def add_balance(user_id, amount):
