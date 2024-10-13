@@ -7,5 +7,6 @@ admin_start_keyboard = ReplyKeyboardMarkup(keyboard=[
      KeyboardButton(text='Задания на проверке')],
     [KeyboardButton(text='Добавить баланс'),
      KeyboardButton(text='Удалить баланс')],
-    [KeyboardButton(text='Удалить категорию')]
+    [KeyboardButton(text='Удалить категорию'),
+     KeyboardButton(text='Статистика бота')]
     ], resize_keyboard=True)

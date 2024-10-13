@@ -15,6 +15,8 @@ from keyboard.inline.admin_panel import category_selection_keyboard, \
 from keyboard.reply.admin_panel import admin_start_keyboard
 from utils.mailing import mailing_task
 
+from task_money.database.requests.admin_panel import get_admin_stats
+
 load_dotenv()
 admin_id = os.getenv('ADMIN_ID')
 router = Router(name=__name__)
@@ -250,3 +252,19 @@ async def final_delete_category_handler(call: CallbackQuery, bot: Bot, state: FS
         await call.message.edit_text(text='Категория успешно удалена!')
     await call.message.answer(text='Вы в главном меню!',
                               reply_markup=admin_start_keyboard)
+
+
+@router.message(F.text == 'Статистика бота')
+async def stats_admin_handler(message: Message, bot: Bot, is_admin: bool, state: FSMContext):
+    if is_admin:
+        await state.clear()
+        (count_users, count_tasks,
+         count_final_tasks, count_active_tasks,
+         count_pending_tasks, total_balance) = await get_admin_stats()
+        await message.answer(text=f'Количество юзеров: {count_users}\n'
+                                  f'Количество задач: {count_tasks}\n'
+                                  f'Из них законченных: {count_final_tasks}\n'
+                                  f'Количество активных задач: {count_active_tasks}\n'
+                                  f'Количество задач в холде: {count_pending_tasks}\n'
+                                  f'Общий баланс юзеров: {total_balance}\n')
+
