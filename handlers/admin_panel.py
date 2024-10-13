@@ -15,7 +15,7 @@ from keyboard.inline.admin_panel import category_selection_keyboard, \
 from keyboard.reply.admin_panel import admin_start_keyboard
 from utils.mailing import mailing_task
 
-from task_money.database.requests.admin_panel import get_admin_stats
+from database.requests.admin_panel import get_admin_stats
 
 load_dotenv()
 admin_id = os.getenv('ADMIN_ID')
