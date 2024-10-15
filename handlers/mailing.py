@@ -129,6 +129,8 @@ async def mailing_final_handler(call: CallbackQuery, bot: Bot, state: FSMContext
 async def mailing(bot: Bot, context):
     users = await get_users()
     for user in users:
-
-        await bot.send_photo(chat_id=user.tg_id, photo=context['photo'],
-                             caption=context['text'], reply_markup=await get_check_post_keyboard(context['button_name'], context['button_url']))
+        try:
+            await bot.send_photo(chat_id=user.tg_id, photo=context['photo'],
+                                 caption=context['text'], reply_markup=await get_check_post_keyboard(context['button_name'], context['button_url']))
+        except:
+            ...
