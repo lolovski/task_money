@@ -41,7 +41,8 @@ async def main() -> None:
     dp.include_router(referral_system_router)
     from handlers.help import router as help_router
     dp.include_router(help_router)
-
+    from handlers.mailing import router as mailing_router
+    dp.include_router(mailing_router)
     await dp.start_polling(bot)
 
 
