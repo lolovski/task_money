@@ -14,10 +14,10 @@ admin_id = os.getenv('ADMIN_ID')
 async def on_startup(bot: Bot):
     from core.commands import set_commands
     await set_commands(bot)
-#    await bot.send_message(admin_id, text=f'<tg-spoiler>Начало работы</tg-spoiler>')
+    await bot.send_message(admin_id, text=f'Бот запустился в работу!')
 
 
 @router.shutdown()
 async def on_shutdown(bot: Bot):
-#    await bot.send_message(admin_id, text=f'<tg-spoiler>КОНЕЦ!</tg-spoiler>')
+    await bot.send_message(admin_id, text=f'БОТ ЛЁГ!')
     ...
