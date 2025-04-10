@@ -46,6 +46,7 @@ async def actuality_tasks_handler(message: Message, bot: Bot, is_admin: bool, st
 @router.callback_query(F.data.startswith('actuality admin task'))
 async def actuality_admin_task_handler(call: CallbackQuery, bot: Bot, state: FSMContext):
     task_id = call.data.split()[-1]
+
     task = await get_task(task_id)
     await call.message.edit_text(text=f"<b>{task.id} {task.title}\n"
                                       f"Описание: {task.text}\n"
