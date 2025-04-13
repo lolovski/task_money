@@ -17,7 +17,6 @@ from keyboard.reply.start import start_keyboard
 load_dotenv()
 router = Router(name=__name__)
 
-channels = [['-1001992734440', 'https://t.me/+sYXDBJmF7jo2ZGIy'], ['-1002081507096', 'https://t.me/+UlaqmVGZgCJlM2Ri']]
 admin_id = os.getenv("ADMIN_ID")
 
 class UserForm(StatesGroup):
@@ -38,21 +37,16 @@ async def start_handler(message: Message, bot: Bot, command: CommandObject, tg_i
     await state.update_data(referral_id=referral_id)
     user = await get_user_by_tg_id(tg_id)
     username = re.sub(r'[^a-zA-Z0-9а-яА-ЯёЁ\s]', '', message.from_user.full_name)
-    user_chanel_status1 = await bot.get_chat_member(chat_id=channels[0][0], user_id=tg_id)
-    user_chanel_status2 = await bot.get_chat_member(chat_id=channels[1][0], user_id=tg_id)
-    if user_chanel_status1.status == 'left' or user_chanel_status2.status == 'left':
-        await message.answer(f"<b>Добро пожаловать!\n"
-                             f"Подпишитесь на наши каналы!</b>", reply_markup=channel_url_keyboard)
+
+    if user is None:
+        await set_user(tg_id, username, referral_id=referral_id)
+        await message.answer("<b>Добро пожаловать!\n"
+                             "Чтобы начать задание нажмите кнопку Приступить к заданию</b>",
+                             reply_markup=adopt_rules)
     else:
-        if user is None:
-            await set_user(tg_id, username, referral_id=referral_id)
-            await message.answer("<b>Добро пожаловать!\n"
-                                 "Чтобы начать задание нажмите кнопку Приступить к заданию</b>",
-                                 reply_markup=adopt_rules)
-        else:
-            await message.answer(f"<b>С возвращением!\n</b>",
-                                 reply_markup=start_keyboard)
-        await state.clear()
+        await message.answer(f"<b>С возвращением!\n</b>",
+                             reply_markup=start_keyboard)
+    await state.clear()
 
 
 @router.callback_query(F.data == 'check_subscription')
