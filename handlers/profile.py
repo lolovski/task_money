@@ -351,11 +351,12 @@ async def mobile_final_handler(message: Message, bot: Bot, state: FSMContext, tg
     if 200 <= balance <= user.balance:
         await debit(tg_id, balance)
         new_balance = user.balance - balance
+        mobile_operator = context.get('mobile_operator')
         await bot.send_message(chat_id=admin_id, text=f'<b>Вывод мобильная связь\n'
                                                       f'id {user.id}\n'
                                                       f'Сумма {balance}₽\n'
-                                                      f'Оператор {context.get('mobile_operator')}\n'
-                                                      f'Номер {context["mobile_telephone</b>"]}',
+                                                      f'Оператор {mobile_operator}\n'
+                                                      f'Номер {context["mobile_telephone"]}</b>',
                                reply_markup=await withdrawal_admin_keyboard(tg_id=tg_id, balance=balance))
         await message.answer(text=f'<b>Деньги отправлены на вывод, ожидайте ответа (~5ч) \n'
                                   f'Текущий баланс: {new_balance}</b>', reply_markup=start_keyboard
