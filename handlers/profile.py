@@ -125,10 +125,11 @@ async def sbp_final_handler(message: Message, bot: Bot, state: FSMContext, tg_id
     if 150 <= balance <= user.balance:
         await debit(tg_id, balance)
         new_balance = user.balance - balance
+        bank = context.get('sbp_bank')
         await bot.send_message(chat_id=admin_id, text=f'<b>Вывод сбп\n'
                                                       f'id {user.id}\n'
                                                       f'Сумма {balance}₽\n'
-                                                      f'Банк {context.get('sbp_bank')}\n'
+                                                      f'Банк {bank}\n'
                                                       f'Телефон {context["telephone"]}</b>',
                                reply_markup=await withdrawal_admin_keyboard(tg_id=tg_id, balance=balance))
         await message.answer(text=f'<b>Деньги отправлены на вывод, ожидайте ответа (~5ч) \n'
