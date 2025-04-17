@@ -204,10 +204,12 @@ async def bank_final_handler(message: Message, bot: Bot, state: FSMContext, tg_i
     if 200 <= balance <= user.balance:
         await debit(tg_id, balance)
         new_balance = user.balance - balance
+        bank = context.get('bank')
+
         await bot.send_message(chat_id=admin_id, text=f'<b>Вывод карта\n'
                                                       f'id {user.id}\n'
                                                       f'Сумма {balance}₽\n'
-                                                      f'Банк {context.get('bank')}\n'
+                                                      f'Банк {bank}\n'
                                                       f'Карта/счёт {context["card"]}</b>',
                                reply_markup=await withdrawal_admin_keyboard(tg_id=tg_id, balance=balance))
         await message.answer(text=f'<b>Деньги отправлены на вывод, ожидайте ответа (~5ч) \n'
