@@ -24,6 +24,7 @@ class Base(AsyncAttrs, DeclarativeBase):
 class User(Base):
     tg_id: Mapped[str] = mapped_column(String(32))
     referral_id: Mapped[Optional[int]] = mapped_column(ForeignKey('user.id'), default=None, unique=False)
+    referral_percent: Mapped[int] = mapped_column(Integer, default=10)
     username: Mapped[str] = mapped_column(String(64))
     reg_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     balance: Mapped[int] = mapped_column(Integer, default=0)

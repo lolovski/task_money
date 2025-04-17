@@ -290,7 +290,7 @@ async def active_admin_cancel_task_handler(call: CallbackQuery, bot: Bot, state:
                                                         f'Ваш текущий баланс: {user.balance}</b>')
         if referral is not None:
             await bot.send_message(chat_id=referral.tg_id, text='<b>Ваш реферал выполнил задание!\n'
-                                                            'Текущий баланс: {referral.balance}</b>')
+                                                                f'Текущий баланс: {referral.balance}</b>')
     await call.message.edit_text(text="<b>Задание завершено!</b>")
     await state.clear()
     await call.message.answer(text='<b>Вы в главном меню</b>', reply_markup=admin_start_keyboard)

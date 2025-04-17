@@ -66,3 +66,23 @@ async def get_user(user_id):
 
         user = await session.scalar(select(User).where(User.id == int(user_id)))
         return user
+
+
+async def get_profile_by_id(user_id):
+    async with async_session() as session:
+        user: User = await session.scalar(select(User).where(User.id == int(user_id)))
+        if user is None:
+            return None
+        pending_tasks = await session.scalars(select(PendingTask).where(PendingTask.user_id == user.id))
+        pending_tasks = pending_tasks.all()
+        tasks_id = [x.task_id for x in pending_tasks]
+        tasks = await session.scalars(select(Task).where(Task.id.in_(tasks_id)))
+        count_ref = await session.scalars(select(User).where(User.referral_id == int(user.id)))
+        return user, tasks.all(), len(count_ref.all())
+
+
+async def change_referral_percent(ref_percent, user_id):
+    async with async_session() as session:
+        user: User = await session.scalar(select(User).where(User.id == int(user_id)))
+        user.referral_percent = ref_percent
+        await session.commit()

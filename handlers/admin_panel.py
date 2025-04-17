@@ -9,10 +9,11 @@ from dotenv import load_dotenv
 from database.requests.admin_panel import add_balance, delete_balance
 from database.requests.category import get_categories, set_category, delete_category
 from database.requests.task import set_task
-from database.requests.user import add_money, get_user
+from database.requests.user import add_money, get_user, get_profile_by_id, change_referral_percent
 from keyboard.inline.admin_panel import category_selection_keyboard, \
-    confirm_add_task_keyboard, delete_category_keyboard
+    confirm_add_task_keyboard, delete_category_keyboard, referral_percent_keyboard
 from keyboard.reply.admin_panel import admin_start_keyboard
+from pyexpat.errors import messages
 from utils.mailing import mailing_task
 
 from database.requests.admin_panel import get_admin_stats
@@ -37,6 +38,11 @@ class BalanceForm(StatesGroup):
     user_id = State()
     amount = State()
     action = State()
+
+
+class UserForm(StatesGroup):
+    user_id = State()
+    referral_percent = State()
 
 
 @router.callback_query(F.data.startswith('withdrawal confirm'))
@@ -268,3 +274,67 @@ async def stats_admin_handler(message: Message, bot: Bot, is_admin: bool, state:
                                   f'Количество задач в холде: {count_pending_tasks}\n'
                                   f'Общий баланс юзеров: {total_balance}\n')
 
+
+@router.message(F.text == 'Найти пользователя')
+async def find_user_handler(message: Message, bot: Bot, is_admin: bool, state: FSMContext):
+    if is_admin:
+        await message.answer('Введите ID пользователя')
+        await state.set_state(UserForm.user_id)
+
+
+@router.message(UserForm.user_id)
+async def user_data_handler(message: Message, bot: Bot, is_admin: bool, state: FSMContext):
+    user_id = message.text
+    try:
+        user_id = int(user_id)
+        user, pending_tasks, count_ref = await get_profile_by_id(user_id)
+        text_pending_tasks = ' \n'
+        for task in pending_tasks:
+            text_pending_tasks += f'{task.title} | {task.reward}₽ \n'
+        await message.answer(
+            text=f'<b>👤 Пользователь: {user.username} \n\n'
+                 f'🏦 Баланс: {user.balance}₽ \n\n'
+                 f'👾 ID: {user.id} \n\n'
+                 f'💰Количество рефералов: {count_ref}\n'
+                 f'Процент реферальной программы: {user.referral_percent}%\n'
+                 f'📥Задания на проверке: {text_pending_tasks} \n</b>',
+            reply_markup=await referral_percent_keyboard(user_id))
+
+    except Exception as e:
+        await message.answer('Неверный формат ID')
+        print(e)
+
+
+@router.callback_query(F.data.startswith('change referral percent'))
+async def change_ref_handler(callback: CallbackQuery, bot: Bot, is_admin: bool, state: FSMContext):
+    user_id = int(callback.data.split()[-1])
+    await state.update_data(user_id=user_id)
+    await callback.message.edit_text(text='Введите процент реферальной программы')
+    await state.set_state(UserForm.referral_percent)
+
+
+@router.message(UserForm.referral_percent)
+async def add_ref_handler(message: Message, bot: Bot, is_admin: bool, state: FSMContext):
+    ref_percent = message.text
+    try:
+        ref_percent = int(ref_percent)
+
+        user_id = (await state.get_data())['user_id']
+        await change_referral_percent(ref_percent, user_id)
+        user, pending_tasks, count_ref = await get_profile_by_id(user_id)
+        text_pending_tasks = ' \n'
+        for task in pending_tasks:
+            text_pending_tasks += f'{task.title} | {task.reward}₽ \n'
+        await message.answer(
+            text=f'<b>Процент изменён!\n\n'
+                 f'👤 Пользователь: {user.username} \n\n'
+                 f'🏦 Баланс: {user.balance}₽ \n\n'
+                 f'👾 ID: {user.id} \n\n'
+                 f'💰Количество рефералов: {count_ref}\n'
+                 f'Процент реферальной программы: {user.referral_percent}%\n'
+                 f'📥Задания на проверке: {text_pending_tasks} \n</b>',
+            reply_markup=await referral_percent_keyboard(user_id))
+
+    except Exception as e:
+        await message.answer('Неверный формат ID')
+        print(e)

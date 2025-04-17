@@ -29,3 +29,9 @@ async def delete_category_keyboard(categories):
     for category in categories:
         keyboard.add(InlineKeyboardButton(text=category.name, callback_data=f'delete category {category.id}'))
     return keyboard.adjust(2).as_markup()
+
+
+async def referral_percent_keyboard(user_id):
+    keyboard = InlineKeyboardBuilder()
+    keyboard.add(InlineKeyboardButton(text='Изменить процент', callback_data=f'change referral percent {user_id}'))
+    return keyboard.as_markup()

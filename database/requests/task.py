@@ -179,7 +179,9 @@ async def complete_pending_task(task_id: int):
         if user.referral_id is not None:
             referral = await session.scalar(select(User).where(User.id == int(user.referral_id)))
             if referral is not None:
-                referral.balance += (int(task.reward) // 10)
+                print(task.reward, referral.referral_percent)
+                referral.balance += (int(task.reward) * (referral.referral_percent / 100))
+
         await session.commit()
         if referral is not None:
             await session.refresh(referral)
