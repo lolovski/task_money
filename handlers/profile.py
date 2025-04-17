@@ -87,9 +87,9 @@ async def sbp_telephone_handler(message: Message, bot: Bot, state: FSMContext):
     await bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
     context = await state.get_data()
     await bot.delete_message(chat_id=message.chat.id, message_id=context.get('message_id'))
-    answer = await message.answer(text='<b>Введите номер телефона</b>'
-                                       ' (Формат +79876543210)\n '
-                                       'Или нажмите на кнопку', reply_markup=contact_keyboard)
+    answer = await message.answer(text='<b>Введите номер телефона'
+                                       ' (Формат +71112223344)\n '
+                                       'Или нажмите на кнопку</b>', reply_markup=contact_keyboard)
     await state.set_state(MoneyWithdrawalForm.telephone)
     await state.update_data(message_id=answer.message_id)
     await state.update_data(sbp_bank=sbp_bank)
